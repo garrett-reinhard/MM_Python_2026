@@ -116,7 +116,7 @@ class NodeTree:
         
         return (is_free)
 
-    def set_experiment_vial(self, name, requested_temperature=None, requested_stir_speed):
+    def set_experiment_vial(self, name, requested_temperature=None, requested_stir_speed=None):
         """find an empty vial, change its name to the experiment measurement name, and update all search trees\n
         Returns already_heated, hotplatename, temperature\n
         TODO: need a way to mark a vial as done to free up hotplate"""
