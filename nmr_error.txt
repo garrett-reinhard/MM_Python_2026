@@ -1,4 +1,0 @@
-Uncaught exception: Traceback (most recent call last):
-  File "c:\Users\labuser\Desktop\MM_0_8_5\Molecule Maker Python\Devices\NMR\qmcontrol-0.1.19\qmcontrol\qmcontrol.py", line 379, in start_run_button_down
-    print(self.trigger_info[0])
-AttributeError: 'MainWindow' object has no attribute 'trigger_info'

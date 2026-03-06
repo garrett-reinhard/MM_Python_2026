@@ -1,4 +1,0 @@
-scan
-scan_0_time_0.0
-C:\Users\labuser\Desktop\MM_0_8_5\Molecule Maker Python/save_data//garrett_test_troubleshoot/edbo_experiment.json/Methanol_1_Acetone_1_hotplate_1
-C:\Users\labuser\Desktop\MM_0_8_5\Molecule Maker Python/Devices/NMR/shims/shim_file.json
