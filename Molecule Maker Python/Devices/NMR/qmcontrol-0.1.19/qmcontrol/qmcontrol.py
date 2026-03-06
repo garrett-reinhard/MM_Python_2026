@@ -345,7 +345,7 @@ class MainWindow(QWidget, Ui_mainWindow):
     
     def check_trigger(self):
         """Runs every 1sec to see if scan file is present in DIRECTORY"""
-        self.TRIGGER_DIRECTORY = r".\..\scan_trigger.txt" #Normal Mode
+        self.TRIGGER_DIRECTORY = r".\..\..\scan_trigger.txt" #Normal Mode
         print("Checking")
 
         #logger.info(f'trigger timer tic')  # for tests

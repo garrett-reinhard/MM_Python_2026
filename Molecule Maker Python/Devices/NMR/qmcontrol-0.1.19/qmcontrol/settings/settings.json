@@ -85,7 +85,7 @@
                     "syncExpanded": false,
                     "title": null,
                     "name": "test scan",
-                    "value": false,
+                    "value": true,
                     "default": false
                 },
                 "trigger enable": {
