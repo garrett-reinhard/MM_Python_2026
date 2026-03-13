@@ -1,0 +1,77 @@
+{
+  "Chlorine": {
+    "type": "vial",
+    "name":"Cl",
+    "cleaning": [1,3],
+    "hotplate":"none",
+    "used":true,
+    "volume":100,
+    "valve_connections":[[1,4],[2,4]]
+  },
+
+  "vial_2": {
+    "type": "vial",
+    "name":"vial_2",
+    "hotplate":"hotplate_1",
+    "hotplate_temp":false,
+    "used":false,
+    "complete":false,
+    "volume": 100,
+    "valve_connections":[[2,5],[3,5]]
+    },
+
+
+    
+  "syringe_1": {
+    "type": "syringe_pump",
+    "name": "syringe_1",
+    "syringe_number": 1,
+    "valve_connections":[[1,2],[4,4]],
+    "connections":["1","n","4","n","unused","n","n","NMR"]
+  },
+
+  "waste": {
+    "type": "vial",
+    "name":"vial_3",
+    "used":true,
+    "volume": 100,
+    "valve_connections":[[2,3]]
+    },  
+
+
+  "NMR": {
+    "type": "NMR",
+    "name": "NMR",
+    "shim_volume":2,
+    "withdraw_volume":2,
+    "waste_volume":1,
+    "syringe":"syringe_1",
+    "valve_connections":[[1,8]]
+  },
+  "NMR_OUT": {
+    "type": "output",
+    "name": "NMR_OUT",
+    "valve_connections":[[1,8]]
+  },
+
+  "UV_VIS":{
+    "type": "UV_vis",
+    "name": "UV_vis",
+    "shim_volume":2,
+    "withdraw_volume":2,
+    "waste_volume":1,
+    "syringe":"syringe_1",
+    "valve_connections":[[1,8]]
+  },
+  "UV_VIS_OUT":{
+    "type": "output",
+    "name": "UV_vis_OUT",
+    "syringe":"syringe_1",
+    "valve_connections":[[1,8]]
+  }
+  
+}
+
+
+
+

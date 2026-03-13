@@ -1,0 +1,1 @@
+This folder contains methods for analyzing the connected devices and finding paths between them.

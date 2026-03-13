@@ -1,0 +1,4 @@
+shim
+shim_1.jdx
+../../../
+../../..//Devices/NMR/shims/shim_file.json

@@ -1,0 +1,40 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "default": {
+            "format": "%(asctime)s.%(msecs)03d [%(name)s] %(levelname)s %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        },
+        "gui": {
+            "format": "%(asctime)s.%(msecs)03d %(levelname)-8s %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        }
+    },
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "qmcontrol.qm_logger.QMFileHandler",
+            "formatter": "default",
+            "maxBytes": 1e8,
+            "backupCount": 5
+        },
+        "gui": {
+            "level": "INFO",
+            "class": "qmcontrol.qm_logger.GUIHandler",
+            "formatter": "gui"
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "default"
+        }        
+    },
+    "loggers": {
+        "qmcontrol": {
+            "handlers": ["file","console","gui"],
+            "level":"INFO",
+            "propagate": true
+        }
+    }
+}

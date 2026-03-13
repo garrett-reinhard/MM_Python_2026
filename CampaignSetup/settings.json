@@ -1,0 +1,38 @@
+{"campaign": {
+    "number_of_reactions": 2,
+    "campaign_name": "Demo",
+    "devices":{
+        "valvebox": {
+            "is_enabled":false,
+            "quantity": 1
+        },
+        "syringe_pump":{
+            "is_enabled":false,
+            "quantity": 1
+        },
+        "hotplate":{
+            "is_enabled":false,
+            "quantity": 1,
+            "COMS": {
+                "0": "COM12",
+                "1": "COM7",
+                "2": "COM9",
+                "3": "COM10"
+            },
+            "names": {
+                "hotplate_1": 0
+            }
+        },
+        "NMR": {
+            "is_enabled":true,
+            "quantity":1
+        },
+        "uv_vis":{
+            "is_enabled":false,
+            "quantity":1
+        }
+
+    }
+    
+    }
+}
