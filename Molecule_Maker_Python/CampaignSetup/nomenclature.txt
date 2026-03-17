@@ -1,0 +1,9 @@
+"valve_connections":[[1,6], [2,8]]
+
+This references inputs only in format [valve, port]. Meaning there is a stock or vial connected there.
+
+In syringe_1
+
+"connections":["1","n","4","n","unused","n","n","NMR"]
+
+This references the corresponding letter for the port on the syringe [A, B, C, D, E, F, G, H]

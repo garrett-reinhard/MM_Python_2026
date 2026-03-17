@@ -6,7 +6,7 @@
     "volume":100,
     "valve_connections":[[1,4], [2,8]],
     "connections":[],
-    "cleaning":[1,3]
+    "cleaning":[]
   },
 
     "Methanol": {
@@ -14,14 +14,14 @@
     "hotplate":"none",
     "used":true,
     "volume":100,
-    "valve_connections":[[1,6], [2,8]],
+    "valve_connections":[[1,6]],
     "connections":[],
-    "cleaning":[1,3]
+    "cleaning":[]
   },
 
   "water": {
     "type": "vial",
-    "cleaning": [2],
+    "cleaning": [1,2,3,4,5],
     "hotplate":"none",
     "used":true,
     "valve_connections":[[1,5],[2,6]]
@@ -54,7 +54,7 @@
     "name":"vial_3",
     "used":true,
     "volume": 100,
-    "valve_connections":[[2,3]]
+    "valve_connections":[[4,5]]
     },  
 
 
