@@ -1,0 +1,21 @@
+{
+    "campaign_name":"garrett_test_troubleshoot",
+    "max_number_of_reactions":4,
+    "reaction_components":{
+        "solvent": ["Acetone"],
+        "reagent":["Methanol"],
+        "solvent_volume":[1,2,3],
+        "reagent_volume":[1,2,3],
+        "temperature":[50,70],
+        "stir_speed":[250]
+    },
+
+    "planner_setup":{
+        "objectives":["yield", "time"], 
+        "objective_mode":["max", "min"], 
+        "batch":1,
+        "columns_features":"all",
+        "init_sampling_method":"cvt"
+    },
+    "syringe":"syringe_1"
+}
