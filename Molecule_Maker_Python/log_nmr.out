@@ -1,0 +1,205 @@
+{'version': 1, 'disable_existing_loggers': False, 'formatters': {'default': {'format': '%(asctime)s.%(msecs)03d [%(name)s] %(levelname)s %(message)s', 'datefmt': '%Y-%m-%d %H:%M:%S'}, 'gui': {'format': '%(asctime)s.%(msecs)03d %(levelname)-8s %(message)s', 'datefmt': '%Y-%m-%d %H:%M:%S'}}, 'handlers': {'file': {'level': 'INFO', 'class': 'qmcontrol.qm_logger.QMFileHandler', 'formatter': 'default', 'maxBytes': 100000000.0, 'backupCount': 5}, 'gui': {'level': 'INFO', 'class': 'qmcontrol.qm_logger.GUIHandler', 'formatter': 'gui'}, 'console': {'level': 'INFO', 'class': 'logging.StreamHandler', 'formatter': 'default'}}, 'loggers': {'qmcontrol': {'handlers': ['file', 'console', 'gui'], 'level': 'INFO', 'propagate': True}}}
+{'filters': [], '_name': None, 'level': 0, 'formatter': None, 'lock': <unlocked _thread.RLock object owner=0 count=0 at 0x000002C8FF8B0F00>, 'emitter': <qmcontrol.qm_logger.LogSignal(0x2c8e6f00300) at 0x000002C8FFA964C0>}
+2026-03-18 16:45:23.176 [qmcontrol.qmcontrol] INFO Load settings...
+2026-03-18 16:45:23.176 [qmcontrol.qmcontrol] INFO Could not find settings file (qmcontrol\settings\settings.json), will use default settings.
+qt.core.qobject.connect: QObject::connect(QStyleHints, QStyleHints): unique connections require a pointer to member function of a QObject subclass
+qt.core.qobject.connect: QObject::connect(QStyleHints, QStyleHints): unique connections require a pointer to member function of a QObject subclass
+2026-03-18 16:45:23.280 [qmcontrol.host_interface] INFO Open USB connection and configure FPGA...
+2026-03-18 16:45:23.608 [qmcontrol.host_interface] INFO FPGA configured
+2026-03-18 16:45:25.002 [qmcontrol.qmcontrol] INFO Starting Trigger
+2026-03-18 16:45:25.003 [qmcontrol.runs.pulse_acquire_run] INFO Pulse Acquire run selected
+2026-03-18 16:45:25.057 [qmcontrol.mainframe] INFO Reading licenses file: C:\Users\labuser\Documents\MM_Python_2026\Molecule_Maker_Python\Devices\NMR\qmcontrol-0.1.19\qmcontrol\licenses.txt
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+Checking
+2026-03-18 16:48:28.579 [qmcontrol.qmcontrol] INFO Saving settings to qmcontrol\settings\settings.json
+Error calling Python override of QMainWindow::closeEvent(): Uncaught exception: Traceback (most recent call last):
+  File "C:\Users\labuser\Documents\MM_Python_2026\Molecule_Maker_Python\Devices\NMR\qmcontrol-0.1.19\qmcontrol\mainframe.py", line 102, in closeEvent
+    self.qmcontrol.close()
+  File "C:\Users\labuser\anaconda3\envs\mm_enviroment\lib\site-packages\pyqtgraph\parametertree\ParameterTree.py", line 172, in event
+    if event.type() == QtCore.QEvent.Type.FontChange:
+  File "C:\Users\labuser\Documents\MM_Python_2026\Molecule_Maker_Python\Devices\NMR\qmcontrol-0.1.19\qmcontrol\qmcontrol.py", line 411, in closeEvent
+    self.save_settings()
+  File "C:\Users\labuser\Documents\MM_Python_2026\Molecule_Maker_Python\Devices\NMR\qmcontrol-0.1.19\qmcontrol\qmcontrol.py", line 314, in save_settings
+    with open(settings_file,'w') as sfile:
+FileNotFoundError: [Errno 2] No such file or directory: 'qmcontrol\\settings\\settings.json'
+

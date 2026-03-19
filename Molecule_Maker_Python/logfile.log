@@ -1,0 +1,232 @@
+{'Acetone': {'type': 'vial', 'hotplate': 'none', 'used': True, 'volume': 100, 'valve_connections': [[1, 4], [2, 8]], 'connections': [], 'cleaning': []}, 'Methanol': {'type': 'vial', 'hotplate': 'none', 'used': True, 'volume': 100, 'valve_connections': [[1, 6]], 'connections': [], 'cleaning': []}, 'water': {'type': 'vial', 'cleaning': [1, 2, 3, 4, 5], 'hotplate': 'none', 'used': True, 'valve_connections': [[1, 5], [2, 6]]}, 'vial_2': {'type': 'vial', 'name': 'vial_2', 'hotplate': 'hotplate_1', 'stir_speed': 0, 'hotplate_temp': False, 'used': False, 'complete': False, 'valve_connections': [[2, 8], [3, 8]]}, 'syringe_1': {'type': 'syringe_pump', 'name': 'syringe_1', 'syringe_number': 1, 'valve_connections': [[1, 2], [4, 4]], 'connections': ['1', 'n', '4', 'n', 'unused', 'n', 'n', 'NMR']}, 'waste': {'type': 'vial', 'name': 'vial_3', 'used': True, 'volume': 100, 'valve_connections': [[4, 5]]}, 'NMR': {'type': 'NMR', 'name': 'NMR', 'shim_volume': 2, 'withdraw_volume': 2, 'waste_volume': 1, 'syringe': 'syringe_1', 'valve_connections': [[1, 8]]}, 'NMR_OUT': {'type': 'output', 'name': 'NMR_OUT', 'valve_connections': [[8, 8]]}, 'UV_VIS': {'type': 'UV_vis', 'name': 'UV_vis', 'shim_volume': 2, 'withdraw_volume': 2, 'waste_volume': 1, 'syringe': 'syringe_1', 'valve_connections': []}, 'UV_VIS_OUT': {'type': 'output', 'name': 'UV_vis_OUT', 'syringe': 'syringe_1', 'valve_connections': []}}
+ADDING VALVE
+Generating a reaction scope...
+The scope was generated and contains 18 possible reactions!
+starting exp
+Starting experiment edbo_experiment.json
+done :D
+Exception in thread Thread-2:
+Traceback (most recent call last):
+  File "C:\Users\labuser\anaconda3\envs\mm_enviroment\lib\threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "C:\Users\labuser\anaconda3\envs\mm_enviroment\lib\threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\labuser\Documents\MM_Python_2026\Molecule_Maker_Python\ExperimentClass\Experiment.py", line 429, in start_experiment
+    self.hold_until_complete(current_reaction) #Gets reaction datapoint to feed into analyzer
+  File "C:\Users\labuser\Documents\MM_Python_2026\Molecule_Maker_Python\ExperimentClass\Experiment.py", line 194, in hold_until_complete
+    good_scan, scan_data, scan_dictionary = read_NMR(scan_filepath, offset=self.solution_reference_dictionary[self.next_solvent.lower()]) # scan data has PPM and intensity
+KeyError: 'acetone'
+4
+There are no experimental observations yet. Random samples will be drawn.
+The following columns are categorical and will be encoded using One-Hot-Encoding: ['solvent', 'reagent']
+Generated 1 initial samples using cvt sampling (seed = 0). Run finished!
+edbo_experiment.jsonreaction_0
+running command _SET_EXPERIMENT_VIAL with args ['edbo_experiment.jsonreaction_0', 50, 250, './save_data//garrett_test_troubleshoot/edbo_experiment.json\\heater.txt']
+running command TRANSFER with args ['Acetone', 'edbo_experiment.jsonreaction_0', 1, 'syringe_1']
+Set_valve_paths: ['Acetone', 'syringe_1']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 4], ['syringe_1', 3], [2, 1], [3, 1], [4, 4]]
+Set_valve_paths: ['syringe_1', 'edbo_experiment.jsonreaction_0']
+Find_intake
+['1']
+Finding Outputs
+['2']
+[[1, 2], ['syringe_1', 1], [2, 8]]
+running command TRANSFER with args ['Methanol', 'edbo_experiment.jsonreaction_0', 1, 'syringe_1']
+Set_valve_paths: ['Methanol', 'syringe_1']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 6], ['syringe_1', 3], [2, 1], [3, 1], [4, 4]]
+Set_valve_paths: ['syringe_1', 'edbo_experiment.jsonreaction_0']
+Find_intake
+['1']
+Finding Outputs
+['2']
+[[1, 2], ['syringe_1', 1], [2, 8]]
+running command MeasureVial with args ['edbo_experiment.jsonreaction_0', 'scan_0_time_0.0', './save_data//garrett_test_troubleshoot/edbo_experiment.json/Methanol_1_Acetone_1_hotplate_1', None]
+Set_valve_paths: ['edbo_experiment.jsonreaction_0', 'syringe_1']
+Find_intake
+['3']
+Finding Outputs
+['4']
+[[3, 8], ['syringe_1', 3], [4, 4]]
+Set_valve_paths: ['syringe_1', 'edbo_experiment.jsonreaction_0']
+Find_intake
+['1']
+Finding Outputs
+['2']
+[[1, 2], ['syringe_1', 1], [2, 8]]
+Set_valve_paths: ['NMR', 'edbo_experiment.jsonreaction_0']
+Find_intake
+['1']
+Finding Outputs
+['2']
+[[1, 8], [2, 8]]
+Set_valve_paths: ['syringe_1', 'NMR']
+[['syringe_1', 8]]
+RUNNING SCAN
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+scan not completed, sleeping 10
+Scan completed
+Cleaning: Step 0 / 5
+Set_valve_paths: ['water', 'syringe_1']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 5], ['syringe_1', 3], [2, 1], [3, 1], [4, 4]]
+Set_valve_paths: ['NMR', 'waste']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 8], [2, 1], [3, 1], [4, 5]]
+Set_valve_paths: ['syringe_1', 'NMR']
+[['syringe_1', 8]]
+Cleaning: Step 1 / 5
+Set_valve_paths: ['water', 'syringe_1']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 5], ['syringe_1', 3], [2, 1], [3, 1], [4, 4]]
+Set_valve_paths: ['NMR', 'waste']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 8], [2, 1], [3, 1], [4, 5]]
+Set_valve_paths: ['syringe_1', 'NMR']
+[['syringe_1', 8]]
+Cleaning: Step 2 / 5
+Set_valve_paths: ['water', 'syringe_1']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 5], ['syringe_1', 3], [2, 1], [3, 1], [4, 4]]
+Set_valve_paths: ['NMR', 'waste']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 8], [2, 1], [3, 1], [4, 5]]
+Set_valve_paths: ['syringe_1', 'NMR']
+[['syringe_1', 8]]
+Cleaning: Step 3 / 5
+Set_valve_paths: ['water', 'syringe_1']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 5], ['syringe_1', 3], [2, 1], [3, 1], [4, 4]]
+Set_valve_paths: ['NMR', 'waste']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 8], [2, 1], [3, 1], [4, 5]]
+Set_valve_paths: ['syringe_1', 'NMR']
+[['syringe_1', 8]]
+Cleaning: Step 4 / 5
+Set_valve_paths: ['water', 'syringe_1']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 5], ['syringe_1', 3], [2, 1], [3, 1], [4, 4]]
+Set_valve_paths: ['NMR', 'waste']
+Find_intake
+['1']
+Finding Outputs
+['4']
+[[1, 8], [2, 1], [3, 1], [4, 5]]
+Set_valve_paths: ['syringe_1', 'NMR']
+[['syringe_1', 8]]
+
+Unhandled Exception: System.ObjectDisposedException: Safe handle has been closed
+   at System.Runtime.InteropServices.SafeHandle.DangerousAddRef(Boolean& success)
+   at System.StubHelpers.StubHelpers.SafeHandleAddRef(SafeHandle pHandle, Boolean& success)
+   at Microsoft.Win32.UnsafeNativeMethods.GetOverlappedResult(SafeFileHandle hFile, NativeOverlapped* lpOverlapped, Int32& lpNumberOfBytesTransferred, Boolean bWait)
+   at System.IO.Ports.SerialStream.EventLoopRunner.WaitForCommEvent()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.ThreadHelper.ThreadStart()
+ERROR conda.cli.main_run:execute(127): `conda run python ./main.py` failed. (See above for error)

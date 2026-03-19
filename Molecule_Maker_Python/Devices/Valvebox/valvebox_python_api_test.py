@@ -4,10 +4,10 @@ import subprocess
 from subprocess import *
 import os
 import sys
-clr.AddReference('.\Devices\Valvebox\ValveModule_DLL')
+clr.AddReference('.\ValveModule_DLL')
 from ValveModule_DLL import ValveMod
-#test = ValveMod()
-#test.Initialize(1,1)
+test = ValveMod()
+test.Initialize(1,2)
 #Contains Constructor for Default valves (starting address 1, 24 ports)
 #Is used over importing DLL to all other files for clealiness and Customizable exceptions
 class valves:
