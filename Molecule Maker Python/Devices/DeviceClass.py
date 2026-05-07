@@ -1,4 +1,5 @@
 from Devices.Valvebox.valvebox_python_api import valves
+from Devices.AMF_valves.afm_valvebox_api import amf_valves
 from Devices.HotPlate.hotplate_api import HotPlate
 from Devices.SyringePump.syringe_pump_api import syring_pump
 from Devices.NMR.nmr_api import NMR
@@ -40,7 +41,7 @@ class Devices:
                 for instance in range(settings["campaign"]["devices"][device]["quantity"]):
                     if device == "valvebox":
                         print("ADDING VALVE")
-                        device_dictionary[device].append(valves())
+                        device_dictionary[device].append((amf_valves()))
                         #device_dictionary[device].append("testing")
                     elif device == "hotplate":
                         #print(settings["campaign"]["devices"][device]["COMS"][str(instance)])
