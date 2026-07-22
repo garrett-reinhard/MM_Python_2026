@@ -10,9 +10,12 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
-from ExactPolymerReactionClass ExactPolymerReactionPlan
+from ExactPolymerReactionClass import ExactPolymerReactionPlan
+from add_component_dialog_box import AddComponentDialog
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        self.reaction_plan = ExactPolymerReactionPlan()
+        self.components = {}
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1117, 673)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -45,6 +48,7 @@ class Ui_MainWindow(object):
         self.Monomer.setMinimumSize(QtCore.QSize(341, 0))
         self.Monomer.setObjectName("Monomer")
         self.Monomer.addItem("")
+        self.Monomer.currentTextChanged.connect(lambda: self.set_atr( "MonomerSolution", self.Monomer.currentText()))
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(280, 10, 161, 16))
         self.label_2.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -54,6 +58,7 @@ class Ui_MainWindow(object):
         self.CouplingReactionComponent.setGeometry(QtCore.QRect(440, 40, 341, 22))
         self.CouplingReactionComponent.setMinimumSize(QtCore.QSize(341, 0))
         self.CouplingReactionComponent.setObjectName("CouplingReactionComponent")
+        self.CouplingReactionComponent.currentTextChanged.connect(lambda: self.set_atr( "CouplingReactionComponent", self.CouplingReactionComponent.currentText()))
         self.CouplingReactionComponent.addItem("")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(170, 40, 271, 20))
@@ -70,11 +75,13 @@ class Ui_MainWindow(object):
         self.ExcessMonomerWash.setMinimumSize(QtCore.QSize(341, 0))
         self.ExcessMonomerWash.setObjectName("ExcessMonomerWash")
         self.ExcessMonomerWash.addItem("")
-        self.ActivatorComponent_2 = QtWidgets.QComboBox(self.centralwidget)
-        self.ActivatorComponent_2.setGeometry(QtCore.QRect(440, 100, 341, 22))
-        self.ActivatorComponent_2.setMinimumSize(QtCore.QSize(341, 0))
-        self.ActivatorComponent_2.setObjectName("ActivatorComponent_2")
-        self.ActivatorComponent_2.addItem("")
+        self.ExcessMonomerWash.currentTextChanged.connect(lambda: self.set_atr( "ExcessMonomerWash", self.ExcessMonomerWash.currentText()))
+        self.ActivatorComponent = QtWidgets.QComboBox(self.centralwidget)
+        self.ActivatorComponent.setGeometry(QtCore.QRect(440, 100, 341, 22))
+        self.ActivatorComponent.setMinimumSize(QtCore.QSize(341, 0))
+        self.ActivatorComponent.setObjectName("ActivatorComponent")
+        self.ActivatorComponent.addItem("")
+        self.ActivatorComponent.currentTextChanged.connect(lambda: self.set_atr( "ActivatorComponent", self.ActivatorComponent.currentText()))
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(30, 70, 411, 20))
         self.label_5.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -85,16 +92,18 @@ class Ui_MainWindow(object):
         self.label_6.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.label_6.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label_6.setObjectName("label_6")
-        self.comboBox_5 = QtWidgets.QComboBox(self.centralwidget)
-        self.comboBox_5.setGeometry(QtCore.QRect(440, 130, 341, 22))
-        self.comboBox_5.setMinimumSize(QtCore.QSize(341, 0))
-        self.comboBox_5.setObjectName("comboBox_5")
-        self.comboBox_5.addItem("")
+        self.ExcessActivatorWash = QtWidgets.QComboBox(self.centralwidget)
+        self.ExcessActivatorWash.setGeometry(QtCore.QRect(440, 130, 341, 22))
+        self.ExcessActivatorWash.setMinimumSize(QtCore.QSize(341, 0))
+        self.ExcessActivatorWash.setObjectName("ExcessActivatorWash")
+        self.ExcessActivatorWash.addItem("")
+        self.ExcessActivatorWash.currentTextChanged.connect(lambda: self.set_atr( "ExcessActivatorWash", self.ExcessActivatorWash.currentText()))
         self.CleavingComponent = QtWidgets.QComboBox(self.centralwidget)
         self.CleavingComponent.setGeometry(QtCore.QRect(440, 160, 341, 22))
         self.CleavingComponent.setMinimumSize(QtCore.QSize(341, 0))
         self.CleavingComponent.setObjectName("CleavingComponent")
         self.CleavingComponent.addItem("")
+        self.CleavingComponent.currentTextChanged.connect(lambda: self.set_atr( "CleavingComponent", self.CleavingComponent.currentText()))
         self.label_7 = QtWidgets.QLabel(self.centralwidget)
         self.label_7.setGeometry(QtCore.QRect(10, 130, 431, 20))
         self.label_7.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -110,6 +119,7 @@ class Ui_MainWindow(object):
         self.EndCap.setMinimumSize(QtCore.QSize(341, 0))
         self.EndCap.setObjectName("EndCap")
         self.EndCap.addItem("")
+        self.EndCap.currentTextChanged.connect(lambda: self.set_atr( "EndCapComponent", self.EndCap.currentText()))
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
         self.label_9.setGeometry(QtCore.QRect(170, 220, 271, 20))
         self.label_9.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -120,6 +130,7 @@ class Ui_MainWindow(object):
         self.ActivatorVial.setMinimumSize(QtCore.QSize(341, 0))
         self.ActivatorVial.setObjectName("ActivatorVial")
         self.ActivatorVial.addItem("")
+        self.ActivatorVial.currentTextChanged.connect(lambda: self.set_atr( "ActivatorVial", self.ActivatorVial.currentText()))
         self.label_12 = QtWidgets.QLabel(self.centralwidget)
         self.label_12.setGeometry(QtCore.QRect(30, 250, 411, 20))
         self.label_12.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -130,11 +141,15 @@ class Ui_MainWindow(object):
         self.MonomerAbsorber.setMinimumSize(QtCore.QSize(341, 0))
         self.MonomerAbsorber.setObjectName("MonomerAbsorber")
         self.MonomerAbsorber.addItem("")
+        self.AddComponentDialogButton = QtWidgets.QPushButton(self.centralwidget)
+        self.AddComponentDialogButton.setGeometry(QtCore.QRect(440, 420, 341, 22))
+        self.AddComponentDialogButton.setMinimumSize(QtCore.QSize(341, 0))
+        self.AddComponentDialogButton.setObjectName("AddComponentDialogButton")
+        self.AddComponentDialogButton.clicked.connect(lambda: self.add_component())
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(20, 320, 191, 71))
         self.pushButton.setObjectName("pushButton")
-        self.ReloadComponentsButton.clicked.connect(self._on_start_press)
-        _on_start_press
+        self.pushButton.clicked.connect(self._on_start_press)
         self.ReloadComponentsButton = QtWidgets.QPushButton(self.centralwidget)
         self.ReloadComponentsButton.setGeometry(QtCore.QRect(20, 230, 191, 71))
         self.ReloadComponentsButton.setObjectName("ReloadComponentsButton")
@@ -149,7 +164,26 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        self.set_connections(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    def set_connections(self, MainWindow):
+        for checkbox in self.centralwidget.findChildren(QtWidgets.QCheckBox):
+            checkbox.toggled.connect(lambda: self._set_block_attributes(MainWindow))
+
+
+    def _set_block_attributes(self,MainWindow):
+        
+        # End Cap Component 
+        self.EndCap.setEnabled( self.end_cap.isChecked())
+
+        #Monomer Absorber vial if solid supported
+        self.MonomerAbsorber.setEnabled( self.monomer_removal_solid_supported.isChecked())
+        
+        #solid supported polymer
+        self.CleavingComponent.setEnabled( self.solid_supported_polymer.isChecked())
+        
+        #Activator Vial solid supported
+        self.ActivatorVial.setEnabled( self.activator_solid_supported.isChecked())
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -166,10 +200,10 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Coupling Reaction Component:"))
         self.label_4.setText(_translate("MainWindow", "Activator Component:"))
         self.ExcessMonomerWash.setItemText(0, _translate("MainWindow", "None"))
-        self.ActivatorComponent_2.setItemText(0, _translate("MainWindow", "None"))
+        self.ActivatorComponent.setItemText(0, _translate("MainWindow", "None"))
         self.label_5.setText(_translate("MainWindow", "Excess Monomer Wash:"))
         self.label_6.setText(_translate("MainWindow", "Cleaving Component:"))
-        self.comboBox_5.setItemText(0, _translate("MainWindow", "None"))
+        self.ExcessActivatorWash.setItemText(0, _translate("MainWindow", "None"))
         self.CleavingComponent.setItemText(0, _translate("MainWindow", "None"))
         self.label_7.setText(_translate("MainWindow", "Excess Activator Wash:"))
         self.label_8.setText(_translate("MainWindow", "End Cap Component:"))
@@ -180,21 +214,44 @@ class Ui_MainWindow(object):
         self.MonomerAbsorber.setItemText(0, _translate("MainWindow", "None"))
         self.pushButton.setText(_translate("MainWindow", "Start"))
         self.ReloadComponentsButton.setText(_translate("MainWindow", "Reload Component"))
+        self.AddComponentDialogButton.setText(_translate("MainWindow", "Add Component"))
 
     def load_components(self):
-
-        with open('.\Molecule Maker Python\CampaignSetup\components.json', 'r') as file:
-            components = json.load(file)
+        
+        with open('.\CampaignSetup\components.json') as file:
+            self.components = self.components | json.load(file)
             selectors = self.centralwidget.findChildren(QtWidgets.QComboBox)
             
-            for component in components:
+            for component in self.components:
                 for selector in selectors:
                     selector.addItem(component)
+        with open('.\CampaignSetup\components.json', 'w') as file:
+            json.dump(self.components, file)
+    def update_components(self):
+        selectors = self.centralwidget.findChildren(QtWidgets.QComboBox)
+            
+        for component in self.components:
+            for selector in selectors:
+                selector.addItem(component)
+    def add_component(self):
+            # Pass 'self' as parent to center the dialog over the main window
+        dlg = AddComponentDialog(self)
+        if dlg.exec():
+            dlg._update_json_entry()
+            self.components = self.components | dlg.component
+            self.update_components()
+            print(self.components)
+        else:
+            print("Dialog was canceled.")
+
+    def set_atr(self, start_value, new_value):
+        self.reaction_plan.__setattr__(start_value,new_value)
 
     def _on_start_press(self):
         pass
 
-
+    ##TODO Add component window
+    ##TODO 2 Grey out non-relevant components
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
