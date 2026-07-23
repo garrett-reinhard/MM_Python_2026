@@ -4,7 +4,10 @@ import subprocess
 from subprocess import *
 import os
 import sys
-clr.AddReference('.\Devices\SyringePump\KEMPumpDLL')
+#clr.AddReference('.\Devices\SyringePump\KEMPumpDLL')
+
+#Temporary load point for hardware testing
+clr.AddReference('.\SyringePump\KEMPumpDLL')
 #clr.AddReference('KEMPumpDLL')
 from KEMPumpDLL import SyringePumpDef
 
