@@ -6,7 +6,7 @@ from Devices.DeviceTransport.transport_methods import NodeTree
 from ExperimentClass.Experiment import Experiment
 from threading import Thread
 from ExperimentClass.Planners.EDBO import EDBOplus
-
+import time
 #import multiprocessing
 #from multiprocessing import Process
 #from multiprocessing import Lock
@@ -115,10 +115,10 @@ class Campaign:
 
 
 if __name__ ==  '__main__':
+    time.sleep(30)
     core = Campaign()
     core.start()
     print("done :D")
-
 
 
 
