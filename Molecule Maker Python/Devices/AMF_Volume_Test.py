@@ -17,12 +17,20 @@ def confirm_action(prompt="Do you want to continue? (y/n): "):
 
 class amf_valves:
     def __init__(self):
+        amf_list =amfTools.util.getProductList()
         self.valve_list = []
-        for valve in amfTools.util.getProductList():
-            self.valve_list.append(AMF(product=valve))
-        
+        for i in range(len(amf_list)):
+            amf : amfTools.AMF = None
+            amf = amfTools.AMF(amf_list[i])
+            self.valve_list.append(amf)
+
+            print(f"Connected to product {amf.getType()} on port {amf.getSerialPort()}\n")
+            amf.home()
+            #amf = amfTools.AMF(list_amf[0])  
+        print(self.valve_list)
     def set_valve(self, valve, port):
-        self.valve_list[valve-1].valveMoveTo(port)
+        """Set valve to specified port (1=8)"""
+        self.valve_list[valve-1].valveMove(port)
 valve = amf_valves()
 
 syringe_loaded = False
@@ -32,23 +40,23 @@ if confirm_action("Load syringe Pump? y/n:"):
 
 
 if confirm_action("Perform port testing cycle? y/n:"):
-    i = 0
-    while(i <8):
+    i = 1
+    while(i <9):
         valve.set_valve(0,i)
         input(f"Confirm Valve is at port {i}. Abort if not.")
         i+=1
     print ("Port testing complete, returning valve to 0")
-    valve.set_valve(0,i)
+    valve.set_valve(0,1)
 
 if syringe_loaded and confirm_action("Perform volume testing cycle? y/n:"):
-    source_port = input("What port on the valve is the source container?")
-    volume = input("How many ml per cycle to transfer?")
-    destination_port = input("What port on the valve is the target destination container?")
+    source_port = int(input("What port on the valve is the source container?"))
+    volume = int(input("How many ml per cycle to transfer?"))
+    destination_port = int(input("What port on the valve is the target destination container?"))
     input("Ensure syringe is connected to center port on valve.")
-    syringe_side_port = input ("What port is the syringe pump connected to the valve on (syringe side)")
-    loops = input("how many iterations to perform")
+    syringe_side_port =int( input ("What port is the syringe pump connected to the valve on (syringe side)"))
+    loops = int(input("how many iterations to perform"))
     verify_loops = confirm_action("await user input between loops to verify volume is correct? y/n:")
-    sleep_time = input("Input pressure equalization sleep time for syringe (Rec. Minimum 3)")
+    sleep_time = int(input("Input pressure equalization sleep time for syringe (Rec. Minimum 3)"))
     loop_count=0
 
     #Begin Loops
