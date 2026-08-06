@@ -1,5 +1,5 @@
 from Devices.Valvebox.valvebox_python_api import valves
-from Devices.AMF_valves.afm_valvebox_api import amf_valves
+from Devices.AMF_valves.amf_valvebox_api import amf_valves
 from Devices.HotPlate.hotplate_api import HotPlate
 from Devices.SyringePump.syringe_pump_api import syring_pump
 from Devices.NMR.nmr_api import NMR

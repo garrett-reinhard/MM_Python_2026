@@ -3,6 +3,43 @@ from amfTools import AMF, Device
 from AMF_valves.amf_valvebox_api import amf_valves
 from SyringePump.syringe_pump_api import syring_pump
 import time
+import copy
+import queue
+import threading
+
+class threaded_valve_tester:
+    def __init__(self,settings,components):
+
+        self.valves = amf_valves()
+
+
+        self.q = queue.Queue()
+        threading.Thread(target=self.worker, daemon=True).start()
+    def worker(self):
+        while True:
+            task = self.q.get()
+            self.run_command(task)
+
+    def issue_command(self, command, args):
+            self.q.put([command, args])
+
+#SET_VALVE
+    
+    def run_command(self, args):
+        """Command called to run queue requests, args =[command, inputs, key]
+        releases key when the command is done running"""
+        
+        command = args[0]
+        inputs = args[1]
+        key = args[2]
+
+        print(f"running command {command} with args {inputs}")
+    
+        func = self.command_issuer.get_command(command=command)
+        
+        func(inputs)
+        key.release()
+
 def confirm_action(prompt="Do you want to continue? (y/n): "):
     while True:
         # Get input, remove trailing space, and convert to lowercase
@@ -31,6 +68,17 @@ class amf_valves:
     def set_valve(self, valve, port):
         """Set valve to specified port (1=8)"""
         self.valve_list[valve-1].valveMove(port)
+
+if confirm_action("test threaded movement?"):
+    threaded_valve = threaded_valve_tester()
+    threaded_valve.issue_command("SET_VALVE", [1,1])
+    threaded_valve.issue_command("SET_VALVE", [1,2])
+    threaded_valve.issue_command("SET_VALVE", [1,3])
+    threaded_valve.issue_command("SET_VALVE", [1,4])
+    if confirm_action("test deep_copy movement?"):
+        cloned_valve = copy.deepcopy(threaded_valve)
+        cloned_valve.issue_command("SET_VALVE", [1,1])
+        input("Verify valve at 1,1")
 valve = amf_valves()
 
 syringe_loaded = False
@@ -73,3 +121,5 @@ if syringe_loaded and confirm_action("Perform volume testing cycle? y/n:"):
         if verify_loops:
             input("Please verify the volume in the output vial is correct")
         loop_count+=1
+
+
