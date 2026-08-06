@@ -8,7 +8,7 @@ import queue
 import threading
 
 class threaded_valve_tester:
-    def __init__(self,settings,components):
+    def __init__(self):
 
         self.valves = amf_valves()
 
@@ -31,14 +31,8 @@ class threaded_valve_tester:
         
         command = args[0]
         inputs = args[1]
-        key = args[2]
-
-        print(f"running command {command} with args {inputs}")
-    
-        func = self.command_issuer.get_command(command=command)
-        
-        func(inputs)
-        key.release()
+        print("setting valve")
+        self.valves.set_valve(inputs[0],inputs[1])
 
 def confirm_action(prompt="Do you want to continue? (y/n): "):
     while True:
