@@ -64,6 +64,9 @@ class NodeTree:
         #print(self.nodes)
         return_list = []
         nodes = self._find_nodes_with(item)
+
+        return nodes #THIS IS ADDED FOR SINGLE VALVE TESTING
+
         for node in nodes:
             if int(node) % 2 == 1:
                 return_list.append(node)
@@ -74,6 +77,9 @@ class NodeTree:
         print("Finding Outputs")
         return_list = []
         nodes = self._find_nodes_with(item)
+
+        return nodes #THIS IS ADDED FOR SINGLE VALVE TESTING
+
         for node in nodes:
             if int(node) % 2 == 0:
                 return_list.append(node)
