@@ -1,9 +1,5 @@
-import ctypes
-import clr
-import subprocess
+
 from subprocess import *
-import os
-import sys
 import amfTools
 from amfTools import AMF, Device
 #test = ValveMod()
