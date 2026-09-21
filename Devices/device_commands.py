@@ -3,6 +3,7 @@ from Devices.Valvebox.valvebox_python_api import valves
 from Devices.SyringePump.syringe_pump_api import syring_pump
 from Devices.DeviceTransport.transport_methods import NodeTree
 import time
+import math
 """This file is where you add new commands
     Add the command name and function as a dict. entry
     Then, define the function bellow (please document things as added)
@@ -13,6 +14,14 @@ class command_controller:
     def __init__(self, device_dictionary, node_dictionary):
         #Device Dictionary holds all device info
         self.device_dictionary = device_dictionary
+
+        #Set tube parameters here ( units cm )
+        SHORT_TUBE_LENGTH = 10
+        LONG_TUBE_LENGTH = 1000
+        TUBE_RADIUS = 0.0381
+        self.SHORT_TUBE_VOLUME = (math.PI * (TUBE_RADIUS ** 2)) * SHORT_TUBE_LENGTH
+        self.LONG_TUBE_VOLUME = (math.PI * (TUBE_RADIUS ** 2)) * LONG_TUBE_LENGTH
+
 
         #node_tree handles connections - for editing path finding see transport_methods.py
         self.node_tree = node_dictionary
@@ -190,7 +199,7 @@ class command_controller:
         """Set valves to connect components"""
         print(f"Set_valve_paths: {args}")
         path = self.node_tree._find_path(args[0], args[1])
-        print(path)
+        tube_volume_adjustment = (2.0 * self.LONG_TUBE_VOLUME) + ((len(path)-2) * self.SHORT_TUBE_VOLUME)
         for step in path:
             
             if("syringe" in str(step[0]) ):
@@ -199,6 +208,7 @@ class command_controller:
             else:
                 self.SetValve([step[0],step[1]])
                 #print(f"Setting Valve {step[0]} to port {step[1]}")
+        return(tube_volume_adjustment)
     def _extract(self, args):
         """Extract desired amount (ml) from specified source to specified syringe. sleeps 5 seconds to allow pressure to equalize
         Input: syringe, source, volume"""
@@ -210,7 +220,7 @@ class command_controller:
         #print("Extract Source: " + source)
     
         #print(f"Extract: set path from {target} to {source}")
-        self._set_valve_path([target, source])
+        volume += self._set_valve_path([target, source])
         self.device_dictionary["syringe_pump"][0].withdraw(int(source[-1]), int(volume))
         time.sleep(5)
 
@@ -225,7 +235,7 @@ class command_controller:
         #print(int(source[-1]))
         #print("Dispense Source: " + source)
         #input()
-        self._set_valve_path([source, target])
+        volume += self._set_valve_path([source, target])
         self.device_dictionary["syringe_pump"][0].dispense(int(source[-1]), int(volume))
 
     def hold_until_complete(self, vial, initial_time):
