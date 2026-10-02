@@ -19,8 +19,8 @@ class command_controller:
         SHORT_TUBE_LENGTH = 10
         LONG_TUBE_LENGTH = 1000
         TUBE_RADIUS = 0.0381
-        self.SHORT_TUBE_VOLUME = (math.PI * (TUBE_RADIUS ** 2)) * SHORT_TUBE_LENGTH
-        self.LONG_TUBE_VOLUME = (math.PI * (TUBE_RADIUS ** 2)) * LONG_TUBE_LENGTH
+        self.SHORT_TUBE_VOLUME = (math.pi * (TUBE_RADIUS ** 2)) * SHORT_TUBE_LENGTH
+        self.LONG_TUBE_VOLUME = (math.pi * (TUBE_RADIUS ** 2)) * LONG_TUBE_LENGTH
 
 
         #node_tree handles connections - for editing path finding see transport_methods.py
@@ -49,7 +49,8 @@ class command_controller:
         for component in components:
             if "cleaning" in components[component]:
                 for cleaning_step_number in components[component]["cleaning"]:
-                    cleaning_list.append(tuple(cleaning_step_number, component))
+                    
+                    cleaning_list.append(tuple([cleaning_step_number, component]))
 
         cleaning_list = sorted(cleaning_list)
         self.clean_routine = [a[1] for a in cleaning_list] 
@@ -187,7 +188,8 @@ class command_controller:
 
                 
         else:
-            self.SetTemp(hotplate_name, temperature)
+            print(f"Hotplate setting verify: {hotplate_name} \n Temp:{temperature}")
+            self.SetTemp([hotplate_name, temperature])
 
             with open(indicator_file, 'w') as f:
                 f.write(f"{temperature}\n{hotplate_name}")

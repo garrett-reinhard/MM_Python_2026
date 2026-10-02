@@ -677,6 +677,7 @@ class Ui_MainWindow(QtWidgets.QWidget):
                         "hotplate": component_data["hotplate"],
                         "used": component_data["is_filled"],
                         "valve_connections": component_data["connections"],
+                        "hotplate_temp":False
                     }
                 }
                 with open(r".\CampaignSetup\components.json", "r") as file:

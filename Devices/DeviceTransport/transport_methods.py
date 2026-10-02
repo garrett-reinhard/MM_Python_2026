@@ -162,9 +162,9 @@ class NodeTree:
                         
             
         if acceptable_vial:
-            self.components[name] = self.components[selected_vial] 
-            del self.components[component]
-            self.components[name] = name #TODO EDITED
+            self.components[name] = self.components.pop(selected_vial) 
+
+            #self.components[name] = name #TODO EDITED
             self.components[name]["used"] = True
 
             self.components[name]["hotplate_temp"] = temp_to_return

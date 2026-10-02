@@ -1,15 +1,24 @@
 {
-    "water_1": {
+    "Chlorine": {
         "type": "vial",
-        "hotplate": "hotplate_1",
+        "name": "Cl",
+        "cleaning": [
+            1,
+            3
+        ],
+        "hotplate": "none",
         "used": true,
+        "volume": 100,
         "valve_connections": [
             [
                 1,
-                2
+                4
+            ],
+            [
+                2,
+                4
             ]
-        ],
-        "hotplate_temp":false
+        ]
     },
     "syringe_1": {
         "type": "syringe_pump",
@@ -72,7 +81,64 @@
             ]
         ]
     },
-
+    "UV_VIS": {
+        "type": "UV_vis",
+        "name": "UV_vis",
+        "shim_volume": 2,
+        "withdraw_volume": 2,
+        "waste_volume": 1,
+        "syringe": "syringe_1",
+        "valve_connections": [
+            [
+                1,
+                8
+            ]
+        ]
+    },
+    "UV_VIS_OUT": {
+        "type": "output",
+        "name": "UV_vis_OUT",
+        "syringe": "syringe_1",
+        "valve_connections": [
+            [
+                1,
+                8
+            ]
+        ]
+    },
+    "testttt": {
+        "type": "vial",
+        "hotplate": "hotplate_1",
+        "used": false,
+        "valve_connections": [
+            [
+                11,
+                1
+            ]
+        ]
+    },
+    "solvent_test": {
+        "type": "vial",
+        "hotplate": "hotplate_1",
+        "used": false,
+        "valve_connections": [
+            [
+                1,
+                1
+            ]
+        ]
+    },
+    "water_1": {
+        "type": "vial",
+        "hotplate": "hotplate_1",
+        "used": true,
+        "valve_connections": [
+            [
+                1,
+                2
+            ]
+        ]
+    },
     "experiment_vial_1": {
         "type": "vial",
         "hotplate": "hotplate_1",
@@ -86,7 +152,6 @@
                 1,
                 8
             ]
-        ],
-        "hotplate_temp":false
+        ]
     }
 }

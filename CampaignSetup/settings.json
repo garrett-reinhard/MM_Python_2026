@@ -7,11 +7,11 @@
             "quantity": 1
         },
         "syringe_pump":{
-            "is_enabled":false,
+            "is_enabled":true,
             "quantity": 1
         },
         "hotplate":{
-            "is_enabled":false,
+            "is_enabled":true,
             "quantity": 1,
             "COMS": {
                 "0": "COM12",

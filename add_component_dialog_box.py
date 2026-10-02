@@ -184,6 +184,7 @@ class AddComponentDialog(QtWidgets.QDialog):
             "hotplate": self.HotplateSelector.currentText(),
             "is_filled": self.IsUsed.isChecked(),
             "connections": self.connection_data,
+            "hotplate_temp": False
         }
 
 
