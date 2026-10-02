@@ -18,7 +18,7 @@ from ExperimentClass.DataProcessing import ScanData
 from ExperimentClass.PeakClass import Peak
 import plotly.express as px
 from ExperimentClass.Planners.EDBO import EDBOplus
-from ExperimentClass.Experiment import Reaction
+from ExperimentClass.Reaction import Reaction
 
 
 class ReactionRunner:
@@ -53,13 +53,16 @@ class ReactionRunner:
         self.shim_file = None
         self.shim_count = 0 # Used to track active shim file
         self.baseline_volume = 0
-
+        self.reference_solvent = "water"
         
     def start_reaction(self, reaction: Reaction, results, result_index):
         """Runs in Thread\n places a list of [time, yield, reaction_obj] at place index"""
+        self.reaction: Reaction = reaction
+        print(f"Starting Reaction: {self.reaction.current_vial}")
+        
         self.key = threading.Lock()
         self.key.acquire()
-        self.reaction: Reaction = reaction
+
         self.create_commands()
         self.run_commands()   
         
@@ -84,11 +87,11 @@ class ReactionRunner:
                 scan_name = f"scan_{reaction.scan_number}_time_{self.current_runtime}"
                 scan_filepath = f"{reaction.save_folder}/{scan_name}_ave.jdx"
                 self.key.release()
-                self.Devices.issue_command("MeasureVial", [self.current_vial,scan_name,reaction.save_folder, self.shim_file], self.key)
+                self.Devices.issue_command("MeasureVial", [self.reaction.current_vial,scan_name,reaction.save_folder, self.shim_file], self.key)
                 self.key.acquire()
 
                 # check if scan is good; process and reduce data
-                good_scan, scan_data, scan_dictionary = read_NMR(scan_filepath, offset=self.solution_reference_dictionary[self.next_solvent.lower()]) # scan data has PPM and intensity
+                good_scan, scan_data, scan_dictionary = read_NMR(scan_filepath, offset=self.solution_reference_dictionary[self.reference_solvent.lower()]) # scan data has PPM and intensity
                 scan_data.ppm = offset_nmr_data(scan_data.ppm, scan_data.intensities, self.ppm_reference)
 
 
@@ -270,14 +273,15 @@ class ReactionRunner:
 
     def create_commands(self):
         """Create the commands to transfer the components determined by EDBO into a reaction vial, also sets solvent shift"""
-        command_list = ["TRANSFER", "TRANSFER"]
+        command_list = []
+        transfer_reagent_args = []
+        print(self.reaction.reagents)
+        for idx, reagent in enumerate(self.reaction.reagents):
+            command_list.append("TRANSFER")
+            transfer_solv_args = [reagent, self.reaction.current_vial, self.reaction.reagent_volumes[idx], self.reaction.syringe]
+            transfer_reagent_args.append(transfer_solv_args)
 
-        #Transfer Solvent args: Chlorine EXPERIMENT_VIAL 5 syringe_1
-        transfer_solv_args = [self.reaction.solvent, self.reaction.current_vial, self.reaction.solvent_volume, self.reaction.syringe]
-        #Transfer reagent
-        transfer_reagent_args = [self.reaction.next_reagent, self.reaction.current_vial, self.reaction.next_reagent_volume, self.reaction.syringe]
-        #Merge
-        cmd_arg_list = [transfer_solv_args, transfer_reagent_args]
+        cmd_arg_list = transfer_reagent_args
 
         #Bind to commands run by run_commands
         self.commands = command_list

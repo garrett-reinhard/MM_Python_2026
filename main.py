@@ -39,30 +39,7 @@ class Campaign:
         self.load_experiments()
         self.create_save_directory()
 
-    def _parse_script_text(self, text):
-        """
-        Takes in a text and returns a dictionary splitting the text
-        by line and appending the first word as the command and rest of the string
-        as list of arguments
-        """
 
-        commands = []
-        command_arguments = []
-        text = text.split('\n')
-        #Cheacking for experiment properties; if not a property add it to the list of commands
-        #TODO currently MUST! have an experiment vial declared
-        for line in text:
-            parsed = line.split(" ", 1)
-            if parsed[0] == "EXPERIMENT_SOLUTION_REFERENCE":
-                experiment_offset_solution = json.load(open("./CampaignSetup/solution_references.json"))[parsed[1]]
-                print(experiment_offset_solution)
-                #input()
-            else:
-                commands.append(parsed[0])
-                command_arguments.append(parsed[1].split())                
-
-        
-        return(commands, command_arguments, experiment_offset_solution)
     
     def load_experiments(self):
         """Load Each script file from the experimets folder to an index"""
@@ -84,6 +61,7 @@ class Campaign:
                                 check_overwrite=False
                             )
             new_experiment.EDBO_settings = experiment_setup["planner_setup"]
+            new_experiment.number_of_reagent_lists = experiment_setup["number_of_reagent_lists"]
             new_experiment.syringe = experiment_setup["syringe"]
             
             self.Experiments.append(new_experiment)

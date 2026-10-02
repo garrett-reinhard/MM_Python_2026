@@ -3,7 +3,7 @@
     "campaign_name": "Demo",
     "devices":{
         "valvebox": {
-            "is_enabled":false,
+            "is_enabled":true,
             "quantity": 1
         },
         "syringe_pump":{
@@ -24,7 +24,7 @@
             }
         },
         "NMR": {
-            "is_enabled":true,
+            "is_enabled":false,
             "quantity":1
         },
         "uv_vis":{

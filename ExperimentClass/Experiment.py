@@ -19,59 +19,7 @@ from ExperimentClass.PeakClass import Peak
 import plotly.express as px
 from ExperimentClass.Planners.EDBO import EDBOplus
 from ExperimentClass.ReactionRunner import ReactionRunner
-class Reaction:
-    """This class EXCLUSIVELY holds information on a reaction for easier management and autofill ability"""
-    def __init__(self):
-        self.start_time = float
-        """Start time of the reaction rounded to 2 decimals"""
-
-        self.measurements = []
-        """List containing every measurement instance for this reaction"""
-
-        self.peaks = []
-        """List of all recorded peaks for this reaction"""
-
-        self.product_peaks = []
-        """List of all peaks that have been defined as products"""
-
-        self.reactant_peaks = []
-        """List of all peaks that have been defined as products"""
-
-        self.save_folder = ""
-        """Save folder for all data related to this reaction"""
-
-        self.predicted_time = None
-        """Predicted completion time of reaction based on this measurement.  If no prediction made is None"""
-        
-        self.starting_volume = float
-        """The volume of the reaction at t=0\n Integrated peak area at t=0"""
-            
-        self.temperature = float
-        """Temperature of this reaction \n Used in Analyzer/Planner"""
-
-        self.final_reaction_time = float
-        """The final duration of this reaction to reach completion\n Used in Analyzer/Planner"""
-
-        self.reaction_finished = False
-        """Is the reaction complete (Bool)"""
-
-        self.scan_number = 0
-        """Number of times this reaction has been measured in the NMR"""
-
-        self.product_yield = 0
-        """Final yield of products based on final measurement time"""
-        self.reagent = ""
-        """Reagent in this reaction"""
-        self.solvent = ""
-        """Solvent in this reaction"""
-        self.reagent_volume = float
-        """Volume of reagent in reaction"""
-        self.solvent_volume = float
-        """Volume of solvent in reaction"""        
-        self.hotplate = ""
-        """Hotplate this reaction took place on"""
-        self.syringe = ""
-        """Syringe this reaction utilized"""
+from ExperimentClass.Reaction import Reaction
 
 
 
@@ -107,7 +55,10 @@ class Experiment:
         """Filepath to the CSV containing EDBO information for relevant campaign"""
         self.reaction_number = 0
 
+        self.number_of_reagent_lists = int
+        """Value of number of reagents combined in this setup"""
 
+        self.next_vial = ""
         #Toggle to just Shim the NMR and nothing else; ensure valveboxes and syringes are disabled in settings
         self.NMR_RUNNER = False
         
@@ -180,17 +131,27 @@ class Experiment:
                 next_reaction: Reaction = Reaction()
                 next_reaction.syringe = self.syringe
                 #determine next temperature and vial
-                next_reaction.solvent = self.reaction_scope.loc[a, 'solvent'] 
-                next_reaction.reagent = self.reaction_scope.loc[a, 'reagent'] 
-                next_reaction.solvent_volume = self.reaction_scope.loc[a, 'solvent_volume']
-                next_reaction.reagent_volume = self.reaction_scope.loc[a, 'reagent_volume']
-                
-                next_reaction.save_folder = f"{self.experiment_folder}/{next_reaction.next_reagent}_{next_reaction.next_reagent_volume}_{next_reaction.next_solvent}_{next_reaction.next_solvent_volume}"
+                next_reaction_name = ""
+
+                for list in range (1, self.number_of_reagent_lists+1):
+                    reagent_list = f"reagents_{list}"
+                    reagent_vol_list = f"reagent_volumes_{list}"
+                    next_reaction.reagents.append(self.reaction_scope.loc[a, reagent_list]) 
+                    next_reaction.reagent_volumes.append(self.reaction_scope.loc[a, reagent_vol_list])
+
+                #Gemerate reaction name
+                for idx, reagent in enumerate(next_reaction.reagents):
+                    next_reaction_name += f"{next_reaction.reagents[idx]}_{next_reaction.reagent_volumes[idx]}"
+
+                print(f"Next reaction name: {next_reaction_name}")
+                next_reaction.save_folder = f"{self.experiment_folder}/{next_reaction_name}"
                 next_temperature = self.reaction_scope.loc[a, 'temperature']
+                self.next_vial = next_reaction_name
+                next_reaction.current_vial=next_reaction_name
                 self.set_vial(next_temperature, next_reaction)
+                
 
-
-                sub_experiment = ReactionRunner(self, self.Devices) #TODO Fix this dependency on deepcopy to avoid device issues
+                sub_experiment = ReactionRunner(self.Devices) #TODO Fix this dependency on deepcopy to avoid device issues
                 reaction_threads.append(threading.Thread(target=sub_experiment.start_reaction, args=(next_reaction, reaction_results, current_reaction_number)))
                 current_reaction_number +=1
 

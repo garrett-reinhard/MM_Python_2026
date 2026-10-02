@@ -13,8 +13,7 @@ from botorch.sampling import SobolQMCNormalSampler, IIDNormalSampler
 from botorch.utils.multi_objective.box_decompositions import \
     NondominatedPartitioning
 
-from idaes.surrogate.pysmo.sampling import LatinHypercubeSampling, CVTSampling
-
+from idaes.core.surrogate.pysmo.sampling import LatinHypercubeSampling, CVTSampling
 import numpy as np
 from ordered_set import OrderedSet
 import pandas as pd
