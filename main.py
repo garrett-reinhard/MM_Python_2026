@@ -16,7 +16,7 @@ import shutil
 
 #If enabled, system will NOT load any hardware or execute any commands and will skip to data analysis
 global DATA_DEBUG
-DATA_DEBUG = True
+DATA_DEBUG = False
 
 
 #All script loading occurs in campaign class

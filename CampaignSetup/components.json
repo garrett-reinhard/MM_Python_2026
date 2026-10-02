@@ -49,14 +49,14 @@
                 2
             ],
             [
-                4,
-                4
+                2,
+                2
             ]
         ],
         "connections": [
             "1",
-            "n",
             "4",
+            "n",
             "n",
             "unused",
             "n",
@@ -144,6 +144,32 @@
             [
                 1,
                 1
+            ]
+        ]
+    },
+    "water_1": {
+        "type": "vial",
+        "hotplate": "hotplate_1",
+        "used": true,
+        "valve_connections": [
+            [
+                1,
+                2
+            ]
+        ]
+    },
+    "experiment_vial_1": {
+        "type": "vial",
+        "hotplate": "hotplate_1",
+        "used": false,
+        "valve_connections": [
+            [
+                2,
+                8
+            ],
+            [
+                1,
+                8
             ]
         ]
     }

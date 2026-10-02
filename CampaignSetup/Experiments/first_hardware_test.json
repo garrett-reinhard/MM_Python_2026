@@ -1,0 +1,30 @@
+{
+    "campaign_name": "first_hardware_test",
+    "max_number_of_reactions": 4,
+    "number_of_reagent_lists": 1,
+    "reaction_components": {
+        "reagents_1": [
+            "water_1"
+        ],
+        "reagent_volumes_1": [
+            10.0
+        ],
+        "temperature": [
+            20.0
+        ]
+    },
+    "planner_setup": {
+        "objectives": [
+            "yield",
+            "time"
+        ],
+        "objective_mode": [
+            "max",
+            "min"
+        ],
+        "batch": 1,
+        "columns_features": "all",
+        "init_sampling_method": "cvt"
+    },
+    "syringe": "syringe_1"
+}

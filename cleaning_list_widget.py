@@ -1,6 +1,7 @@
 import sys
-from qtpy.QtCore import Qt, Signal
-from qtpy.QtWidgets import (
+from PyQt5.QtCore import Qt
+from PyQt5.QtCore import pyqtSignal as Signal
+from PyQt5.QtWidgets import (
     QApplication,
     QComboBox,
     QDoubleSpinBox,
