@@ -183,8 +183,9 @@ class NodeTree:
 
         for component in self.components:
             #These if statements are seperated to avoid checking for a used parameter on types that may not have one
-            if self.components[component]["type"] == "vial" and self.components[component]["hotplate"] == hotplate_name:
-                self.components[component]["hotplate_temp"] = new_temperature
+            if self.components[component]["type"] == "vial" and "hotplate" in self.components[component]:
+                if self.components[component]["hotplate"] == hotplate_name:
+                    self.components[component]["hotplate_temp"] = new_temperature
         self._update_nodes(self.components)
         
         

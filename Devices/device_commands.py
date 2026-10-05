@@ -102,6 +102,7 @@ class command_controller:
     def SetTemp(self, args):
         """Args=[str, double]\n
         =[hotplate Name, temperature]"""
+        #print(f"SetTemp Device_dictionary Check: \n {self.device_dictionary}")
         com_port = self.device_dictionary["hotplate_names"][args[0]]
 
         self.device_dictionary["hotplate"][int(com_port)].SetTemp(float(args[1]))
