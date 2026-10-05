@@ -3,6 +3,7 @@ from Devices.Valvebox.valvebox_python_api import valves
 from Devices.SyringePump.syringe_pump_api import syring_pump
 from Devices.DeviceTransport.transport_methods import NodeTree
 import time
+import math
 """This file is where you add new commands
     Add the command name and function as a dict. entry
     Then, define the function bellow (please document things as added)
@@ -14,12 +15,18 @@ class command_controller:
         #Device Dictionary holds all device info
         self.device_dictionary = device_dictionary
 
+        #Set tube parameters here ( units cm )
+        SHORT_TUBE_LENGTH = 10
+        LONG_TUBE_LENGTH = 1000
+        TUBE_RADIUS = 0.0381
+        self.SHORT_TUBE_VOLUME = (math.pi * (TUBE_RADIUS ** 2)) * SHORT_TUBE_LENGTH
+        self.LONG_TUBE_VOLUME = (math.pi * (TUBE_RADIUS ** 2)) * LONG_TUBE_LENGTH
+
+
         #node_tree handles connections - for editing path finding see transport_methods.py
         self.node_tree = node_dictionary
-        self.cleaning_volume = 2
+        self.cleaning_volume = 5
         self.clean_routine = self._get_clean_routine()
-        
-        #input(f"{self.clean_routine}")
         #INSERT COMMANDS HERE
         self.COMMANDS = {
         "SET_VALVE": self.SetValve,
@@ -42,13 +49,12 @@ class command_controller:
         for component in components:
             if "cleaning" in components[component]:
                 for cleaning_step_number in components[component]["cleaning"]:
-                    to_append = [cleaning_step_number, component]
-                    cleaning_list.append(to_append)
+                    
+                    cleaning_list.append(tuple([cleaning_step_number, component]))
 
         cleaning_list = sorted(cleaning_list)
-        #input(f"{cleaning_list}")
-        return([a[1] for a in cleaning_list] )
-        
+        self.clean_routine = [a[1] for a in cleaning_list] 
+            
 
     def Shim(self, args):
         """Args: Vial_to_shim, Save_directory, File_name, shim_file(optional)"""
@@ -96,18 +102,10 @@ class command_controller:
     def SetTemp(self, args):
         """Args=[str, double]\n
         =[hotplate Name, temperature]"""
+        #print(f"SetTemp Device_dictionary Check: \n {self.device_dictionary}")
         com_port = self.device_dictionary["hotplate_names"][args[0]]
 
         self.device_dictionary["hotplate"][int(com_port)].SetTemp(float(args[1]))
-        self.device_dictionary["hotplate"][int(com_port)].StartHeater()
-        self.node_tree.SetHotplate(args[0], args[1])
-    def SetStir(self, args):
-        """Args=[str, double]\n
-        =[hotplate Name, temperature]"""
-        com_port = self.device_dictionary["hotplate_names"][args[0]]
-
-        self.device_dictionary["hotplate"][int(com_port)].SetStirSpeed(float(args[1]))
-        self.device_dictionary["hotplate"][int(com_port)].StartStir()
         self.node_tree.SetHotplate(args[0], args[1])
 
     def SetSyringe(self, args):
@@ -146,10 +144,10 @@ class command_controller:
         else:
             shim_file =None
 
-        
+        #TODO: Seperate NMR into NMR; NMR_INPUT; NMR_OUTPUT items in components.json to allow for transfer between nodes for NMR cleaning
         self._extract([source, syringe, withdraw_volume])
-        self._dispense([syringe, source, waste_volume]) # Remove air - switch source to "waste" if desired #TODO remove the setting path, directly acces Valve to push straight back
-        self._set_valve_path(["NMR", source]) # Set path from NMR back to source vial
+        self._dispense([syringe, source, waste_volume]) # Remove air - switch source to "waste" if desired
+        self._set_valve_path(["NMR_OUT", source]) # Set path from NMR back to source vial
         self._dispense([syringe, "NMR", measure_volume]) #Push Through NMR
 
         #TODO, may need to adjust nmr.scan to save correctly
@@ -158,10 +156,9 @@ class command_controller:
 
    
     def clean(self, syringe):
-        for idx, cleaning_agent in enumerate(self.clean_routine):
-            print(f"Cleaning: Step {idx} / {len(self.clean_routine)}")
+        for cleaning_agent in self.clean_routine:
             self._extract([cleaning_agent, syringe, self.cleaning_volume])
-            self._set_valve_path(["NMR", "waste"]) # Set path from NMR back to source vial
+            self._set_valve_path(["NMR_OUT", "waste"]) # Set path from NMR back to source vial
             self._dispense([syringe, "NMR", self.cleaning_volume]) #Push Through NMR
 
 
@@ -169,7 +166,7 @@ class command_controller:
     def _set_experiment_vial(self, args):
         """args: measurement_name\n
         Finds the first unused vial and sets it's name/properties to be called by an experiment\n
-        """
+        TODO: need a way to mark a vial as done to free up hotplate"""
 
         """
         Vial Component Breakdown:
@@ -179,7 +176,7 @@ class command_controller:
         """
 
         requested_temp = args[1]
-        #requested_stir = args[2] TODO read stir speed
+
         #File to create for passing info to Experiment
         indicator_file = args[2]
         already_heated, hotplate_name, temperature = self.node_tree.set_experiment_vial(args[0], args[1])
@@ -192,9 +189,9 @@ class command_controller:
 
                 
         else:
-
+            print(f"Hotplate setting verify: {hotplate_name} \n Temp:{temperature}")
             self.SetTemp([hotplate_name, temperature])
-            #self.SetStir([hotplate_name, stir_speed])
+
             with open(indicator_file, 'w') as f:
                 f.write(f"{temperature}\n{hotplate_name}")
           
@@ -205,7 +202,7 @@ class command_controller:
         """Set valves to connect components"""
         print(f"Set_valve_paths: {args}")
         path = self.node_tree._find_path(args[0], args[1])
-        print(path)
+        tube_volume_adjustment = (2.0 * self.LONG_TUBE_VOLUME) + ((len(path)-2) * self.SHORT_TUBE_VOLUME)
         for step in path:
             
             if("syringe" in str(step[0]) ):
@@ -214,7 +211,8 @@ class command_controller:
             else:
                 self.SetValve([step[0],step[1]])
                 #print(f"Setting Valve {step[0]} to port {step[1]}")
-    def  _extract(self, args):
+        return(tube_volume_adjustment)
+    def _extract(self, args):
         """Extract desired amount (ml) from specified source to specified syringe. sleeps 5 seconds to allow pressure to equalize
         Input: syringe, source, volume"""
         #print(f"Extract: {args}")
@@ -225,25 +223,9 @@ class command_controller:
         #print("Extract Source: " + source)
     
         #print(f"Extract: set path from {target} to {source}")
-        self._set_valve_path([target, source])
+        volume += self._set_valve_path([target, source])
         self.device_dictionary["syringe_pump"][0].withdraw(int(source[-1]), int(volume))
         time.sleep(5)
-
-    def _extract_no_path(args):
-        """Extract desired amount (ml) from specified source to specified syringe. sleeps 5 seconds to allow pressure to equalize
-        Input: syringe, source, volume"""
-
-        volume = args[1]
-        pump = args[0]
-         
-        #print(f"Extract: {args}")
-        
-        #print("Extract Source: " + source)
-    
-        #print(f"Extract: set path from {target} to {source}")
-        self.device_dictionary["syringe_pump"][0].withdraw(int(pump[-1]), int(volume))
-        time.sleep(5)
-
 
     def _dispense(self, args):
         """dispense desired amount (ml) from specified syringe to specified component
@@ -256,7 +238,7 @@ class command_controller:
         #print(int(source[-1]))
         #print("Dispense Source: " + source)
         #input()
-        self._set_valve_path([source, target])
+        volume += self._set_valve_path([source, target])
         self.device_dictionary["syringe_pump"][0].dispense(int(source[-1]), int(volume))
 
     def hold_until_complete(self, vial, initial_time):

@@ -190,7 +190,7 @@ class Experiment:
     def set_vial(self, requested_temperature, reaction: Reaction):
         """Send commands to the device driver to allocate a vial for this reaction+key"""
         set_vial_command = "_SET_EXPERIMENT_VIAL"
-        heater_file = reaction.save_folder + "\heater.txt"
+        heater_file = reaction.save_folder + "/heater.txt"
         set_vial_args = [self.next_vial, requested_temperature, heater_file] #next vial name, temperature request, reaction save folder (for reading return temp.)
         print(self.next_vial)
 
